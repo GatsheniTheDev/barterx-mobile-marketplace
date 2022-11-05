@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "795408973292",
+    "firebase_url": "https://barter-x-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "barter-x",
+    "storage_bucket": "barter-x.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795408973292:android:f7823d8d2783f2423754c9",
+        "android_client_info": {
+          "package_name": "com.example.barterx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795408973292-mopqqovmov11n1635udb2eor0537d258.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcxPDbYqRnNamNz6H11mI_CnuefN7bOxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795408973292-mopqqovmov11n1635udb2eor0537d258.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_Home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/menu_Profile"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/menu_Listings"
+            android:icon="@drawable/ic_baseline_view_list_24"
+            android:title="@string/listings" />
+        <item
+            android:id="@+id/menu_Messages"
+            android:icon="@drawable/ic_baseline_chat_24"
+            android:title="@string/chat" />
+    </group>
+
+</menu>
