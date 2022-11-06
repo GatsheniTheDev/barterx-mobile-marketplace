@@ -7,6 +7,27 @@ public class Profile {
     private String email;
     private String phone ;
     private String imageUrl;
+    private double latitude;
+    private  double logitude;
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLogitude() {
+        return logitude;
+    }
+
+    public Profile(String id, String firstname, String lastname, String email, String phone, String imageUrl, double latitude, double logitude) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.imageUrl = imageUrl;
+        this.latitude = latitude;
+        this.logitude = logitude;
+    }
 
     @Override
     public String toString() {
@@ -17,6 +38,8 @@ public class Profile {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", latitude=" + latitude +
+                ", logitude=" + logitude +
                 '}';
     }
 
