@@ -13,4 +13,9 @@
     <color name="logo_color">#6F5043</color>
     <color name="theme_color">#2176FF</color>
     <color name="theme_color_8">#142176FF</color>
+    <color name="burgundy">#800020</color>
+    <color name="cinnamon">#D27D2D</color>
+    <color name="nude">#F2D2BD</color>
+    <color name="mocha">#967969</color>
+    <color name="sienna">#A0522D</color>
 </resources>

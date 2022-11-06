@@ -74,7 +74,9 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Auth failed please check login details", Toast.LENGTH_SHORT).show();
 //                            FirebaseUser user = mAuth.getCurrentUser(); // get an instance of the currently logged user that just registered
 //                            Toast.makeText(getApplicationContext(), user.getEmail().toString() +" signed in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, ChatActivity.class));
+                            // TODO : EDITED
+                            //startActivity(new Intent(Login.this, ChatActivity.class));
+                            startActivity(new Intent(Login.this, Menu.class));
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

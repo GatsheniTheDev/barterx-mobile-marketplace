@@ -28,4 +28,18 @@
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
     <string name="resetPassword">Forgot Password?</string>
+    <string name="prodName">Title</string>
+    <string name="prodCategory">Category</string>
+    <string name="prodCondition">Condition</string>
+    <string name="prodDescription">Description</string>
+    <string name="next">next</string>
+    <string name="prev">prev</string>
+    <style name="itemTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="boxStrokeWidth">3dp</item>
+    </style>
+    <style name="itemOutlineStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="boxStrokeWidth">3dp</item>
+    </style>
 </resources>
