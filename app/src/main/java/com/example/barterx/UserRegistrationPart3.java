@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class UserRegistrationPart3 extends AppCompatActivity {
     private FirebaseFirestore db;
     private Map<String, String> images = new HashMap<>();
     private  TextView cancel;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -58,6 +60,7 @@ public class UserRegistrationPart3 extends AppCompatActivity {
         cancel = findViewById(R.id.cancelImageReg);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        progressBar = findViewById(R.id.simpleProgressBar);
 
         getImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +71,11 @@ public class UserRegistrationPart3 extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            upload();
+                if(imageUri == null){
+                    Toast.makeText(getApplicationContext(),"Please select image",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                upload();
             }
         });
 
@@ -101,6 +108,7 @@ public class UserRegistrationPart3 extends AppCompatActivity {
     }
 
     private  void  upload(){
+        progressBar.setVisibility(View.VISIBLE);
         final String imageKey = UUID.randomUUID().toString();
         StorageReference fileRef = storageReference.child("image/"+imageKey);
         fileRef.putFile(imageUri)
@@ -108,11 +116,13 @@ public class UserRegistrationPart3 extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         uploadMetaData(fileRef);
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Image Upload Failed", Toast.LENGTH_LONG).show();
                     }
                 });

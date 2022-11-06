@@ -82,7 +82,13 @@
 
 
         </LinearLayout>
-
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_centerHorizontal="true"/>
     </androidx.cardview.widget.CardView>
 
     <TextView

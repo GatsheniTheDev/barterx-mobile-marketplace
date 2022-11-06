@@ -1,11 +1,19 @@
 package com.example.barterx;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -17,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.example.barterx.algorithms.BitmapConverterFromUrl;
 import com.example.barterx.databinding.ActivityProfileBinding;
 import com.example.barterx.model.Profile;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +51,6 @@ public class activity_profile extends AppCompatActivity {
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         db = FirebaseFirestore.getInstance();
-
         getProfileById(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         binding.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +90,7 @@ public class activity_profile extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Profile user = document.toObject(Profile.class);
-                        binding.clientName.setText(user.getFirstname() + ""+user.getLastname());
+                        binding.clientName.setText(user.getFirstname() +" "+user.getLastname());
                         binding.mail.setText(""+user.getEmail());
                         binding.contactNumber.setText(""+user.getPhone());
                         binding.location.setText("Lat: "+ user.getLatitude()+", Long:  "+user.getLogitude());
