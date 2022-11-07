@@ -1,32 +1,21 @@
 package com.example.barterx;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.barterx.adapter.ListingAdapter;
 import com.example.barterx.algorithms.BitmapConverterFromUrl;
 import com.example.barterx.databinding.ActivityProfileBinding;
+import com.example.barterx.model.ListingDto;
 import com.example.barterx.model.Profile;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -34,14 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import java.util.List;
 
 public class activity_profile extends AppCompatActivity {
     private ActivityProfileBinding binding;
     private FirebaseFirestore db;
+    private ListingAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +39,13 @@ public class activity_profile extends AppCompatActivity {
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        adapter = new ListingAdapter(this);
+        binding.myListingRecycler.setAdapter(adapter);
+        binding.myListingRecycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true));
         setContentView(binding.getRoot());
         db = FirebaseFirestore.getInstance();
         getProfileById(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        getMyListing(FirebaseAuth.getInstance().getCurrentUser().getUid());
         binding.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +56,7 @@ public class activity_profile extends AppCompatActivity {
         binding.listingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Listing Button Clicked",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(activity_profile.this, Listings.class));
             }
         });
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -109,5 +103,23 @@ public class activity_profile extends AppCompatActivity {
                 Log.d("Tag",e.getMessage());
             }
         });
+    }
+
+    private void getMyListing(String userId){
+        db.collection("listing").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            List<ListingDto> listingDtos = task.getResult().toObjects(ListingDto.class);
+                            adapter.clear();
+                            for (ListingDto dto: listingDtos){
+                                if(dto.getMerchantId().equals(userId)){
+                                    adapter.add(dto);
+                                }
+                            }
+                        }
+                    }
+                });
     }
 }

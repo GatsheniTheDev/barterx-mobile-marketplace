@@ -30,7 +30,7 @@
             android:name=".Chat"
             android:exported="false" />
         <activity
-            android:name=".Listings"
+            android:name=".Dashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
             android:name=".Drawer_Base"
             android:exported="false" />
         <activity
-            android:name=".Dashboard"
+            android:name=".Listings"
             android:exported="false"/>
         <activity
             android:name=".MessagingHomeActivity"

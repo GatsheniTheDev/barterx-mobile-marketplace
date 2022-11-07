@@ -31,6 +31,7 @@
 
                 <ImageSwitcher
                     android:id="@+id/imageSwitcher"
+                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="260dp">
 
@@ -86,7 +87,13 @@
 
             </RelativeLayout>
 
-
+            <ProgressBar
+                android:id="@+id/simpleProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:layout_centerHorizontal="true"/>
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -221,6 +228,4 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </ScrollView>

@@ -51,7 +51,7 @@ public class Drawer_Base extends AppCompatActivity implements NavigationView.OnN
                 break;
             }
             case R.id.menu_Profile:{
-                startActivity(new Intent(this, User_Profile.class));
+                startActivity(new Intent(this, activity_profile.class));
                 overridePendingTransition(0, 0);
                 break;
             }
