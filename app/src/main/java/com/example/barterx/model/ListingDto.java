@@ -1,8 +1,9 @@
 package com.example.barterx.model;
 
 import java.util.List;
+import java.util.Objects;
 
-public class ListingDto {
+public class ListingDto implements Comparable<ListingDto> {
     private String merchantId;
     private String title;
     private String category;
@@ -10,6 +11,30 @@ public class ListingDto {
     private String description;
     private double latitude;
     private double longitude;
+    private double distance;
+
+    @Override
+    public String toString() {
+        return "ListingDto{" +
+                "merchantId='" + merchantId + '\'' +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", condition='" + condition + '\'' +
+                ", description='" + description + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", distance=" + distance +
+                ", listingImages=" + listingImages +
+                '}';
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
     public ListingDto() {
     }
@@ -69,5 +94,30 @@ public class ListingDto {
 
     public List<String> getListingImages() {
         return listingImages;
+    }
+
+
+    @Override
+    public int compareTo(ListingDto o) {
+        if(this.distance == o.distance){
+            return 0;
+        }else if(this.distance > o.distance){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListingDto dto = (ListingDto) o;
+        return Double.compare(dto.latitude, latitude) == 0 && Double.compare(dto.longitude, longitude) == 0 && Double.compare(dto.distance, distance) == 0 && Objects.equals(merchantId, dto.merchantId) && Objects.equals(title, dto.title) && Objects.equals(category, dto.category) && Objects.equals(condition, dto.condition) && Objects.equals(description, dto.description) && Objects.equals(listingImages, dto.listingImages);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(merchantId, title, category, condition, description, latitude, longitude, distance, listingImages);
     }
 }
