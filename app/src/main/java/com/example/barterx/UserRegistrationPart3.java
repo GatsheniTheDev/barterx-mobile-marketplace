@@ -83,7 +83,8 @@ public class UserRegistrationPart3 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: redirect user to home page and do not capture image details
-                startActivity(new Intent(UserRegistrationPart3.this, Dashboard.class));
+                // TODO : edit 5
+                //startActivity(new Intent(UserRegistrationPart3.this, Dashboard.class));
             }
         });
 

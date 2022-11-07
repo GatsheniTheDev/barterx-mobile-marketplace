@@ -62,7 +62,8 @@ public class activity_profile extends AppCompatActivity {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(activity_profile.this, Menu.class));
+                // TODO : edit 1
+                //startActivity(new Intent(activity_profile.this, Menu.class));
             }
         });
 

@@ -106,8 +106,8 @@ public class UserRegistrationStep2 extends AppCompatActivity {
             public void onClick(View view) {
                 //Do not add details to user profile
                 // TODO: redirect user to the home page
-                startActivity(new Intent(UserRegistrationStep2.this, Dashboard.class));
-                ;
+                // TODO : edit 5
+                //startActivity(new Intent(UserRegistrationStep2.this, Dashboard.class));
             }
         });
     }

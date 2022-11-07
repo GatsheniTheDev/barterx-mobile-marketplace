@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, Login.class));
                     finish();
                 }else{
-                    // TODO: show home page
-                    // TODO: add customer details to global object so that i can be accessible by the profile page
+                    // TODO : edit 4
                     //startActivity(new Intent(MainActivity.this, Dashboard.class));
-                    startActivity(new Intent(MainActivity.this, Dashboard.class));
-                    //startActivity(new Intent(MainActivity.this, MessagingHomeActivity.class));
+                   // startActivity(new Intent(MainActivity.this, Menu.class));
                 }
             }
         }, 3000);

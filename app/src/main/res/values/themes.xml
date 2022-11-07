@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.BarterX" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/theme_color</item>
-        <item name="colorPrimaryVariant">@color/theme_color</item>
+        <item name="colorPrimary">@color/level_3</item>
+        <item name="colorPrimaryVariant">@color/level_3</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

@@ -10,7 +10,6 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BarterX"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".Menu"
+            android:exported="false" />
         <activity
             android:name=".activity_profile"
             android:exported="false">
@@ -27,34 +30,13 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Chat"
-            android:exported="false" />
-        <activity
-            android:name=".Dashboard"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".User_Profile"
-            android:exported="false" />
-        <activity
-            android:name=".Drawer_Base"
-            android:exported="false" />
-        <activity
             android:name=".Listings"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MessagingHomeActivity"
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Menu"
             android:exported="false" />
         <activity
             android:name=".UserRegistrationPart3"
@@ -70,7 +52,13 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

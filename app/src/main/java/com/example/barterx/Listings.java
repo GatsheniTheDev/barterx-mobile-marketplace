@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.barterx.algorithms.BitmapConverterFromUrl;
 import com.example.barterx.databinding.ActivityListingsBinding;
@@ -50,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Listings extends Drawer_Base {
+public class Listings extends AppCompatActivity {
 
     private ActivityListingsBinding activityListingsBinding;
     private final int GALLERY_REQ_CODE = 1000;
@@ -91,7 +92,6 @@ public class Listings extends Drawer_Base {
         super.onCreate(savedInstanceState);
         activityListingsBinding = ActivityListingsBinding.inflate(getLayoutInflater());
         setContentView(activityListingsBinding.getRoot());
-        allocateActivityTitle("LISTINGS");
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         database = FirebaseFirestore.getInstance();

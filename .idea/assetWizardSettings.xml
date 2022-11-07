@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/sort/baseline_sort_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/email/baseline_email_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,7 +34,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="090909" />
-                            <entry key="outputName" value="ic_baseline_sort_24" />
+                            <entry key="outputName" value="ic_baseline_email_24" />
                             <entry key="sourceFile" value="C:\Users\Sketch\Videos\Clone\BarterX_Mobile_Application" />
                           </map>
                         </option>
