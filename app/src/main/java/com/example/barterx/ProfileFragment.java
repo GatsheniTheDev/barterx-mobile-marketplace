@@ -1,12 +1,42 @@
 package com.example.barterx;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.barterx.adapter.ListingAdapter;
+import com.example.barterx.algorithms.BitmapConverterFromUrl;
+import com.example.barterx.databinding.ActivityProfileBinding;
+import com.example.barterx.databinding.FragmentProfileBinding;
+import com.example.barterx.model.ListingDto;
+import com.example.barterx.model.Profile;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,7 +44,13 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-
+    private FirebaseFirestore db;
+    private ListingAdapter adapter;
+    private ImageView imageView;
+    private TextView  name,email,number;
+    private RecyclerView mRecyclerView;
+    private LinearLayout btnEdit, btnAdd,btnView;
+    private ProgressBar progressBar;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,6 +89,9 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
@@ -60,5 +99,102 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        mRecyclerView = view.findViewById(R.id.myListingRecycler);
+        imageView = view.findViewById(R.id.userImage);
+        name = view.findViewById(R.id.client_name);
+        email = view.findViewById(R.id.mail);
+        number = view.findViewById(R.id.contactNumber);
+        btnAdd = view.findViewById(R.id.btnAddListing);
+        btnEdit = view.findViewById(R.id.btnEditProfile);
+        btnView = view.findViewById(R.id.btnViewListing);
+        progressBar = view.findViewById(R.id.userProgressBar);
+        adapter = new ListingAdapter(getContext());
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,true));
+        db = FirebaseFirestore.getInstance();
+        getProfileById(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        getMyListing(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Edit Button Clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Add button Clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"View Listing Button Clicked",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getProfileById(String collectionName){
+        progressBar.setVisibility(View.VISIBLE);
+        DocumentReference documentReference = db.collection("users").document(collectionName);
+        documentReference.get().addOnCompleteListener( new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        Profile user = document.toObject(Profile.class);
+                        name.setText(user.getFirstname() +" "+user.getLastname());
+                        email.setText(""+user.getEmail());
+                        number.setText(""+user.getPhone());
+                        try {
+                            imageView.setImageBitmap(BitmapConverterFromUrl.drawImageToView(user.getImageUrl()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                String message = e.getMessage();
+                Log.d("Tag",e.getMessage());
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void getMyListing(String userId){
+        progressBar.setVisibility(View.VISIBLE);
+        db.collection("listing").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            List<ListingDto> listingDtos = task.getResult().toObjects(ListingDto.class);
+                            adapter.clear();
+                            for (ListingDto dto: listingDtos){
+                                if(dto.getMerchantId().equals(userId)){
+                                    adapter.add(dto);
+                                }
+                            }
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
     }
 }

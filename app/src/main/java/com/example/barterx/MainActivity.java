@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }else{
                     // TODO : edit 4
-                    //startActivity(new Intent(MainActivity.this, Dashboard.class));
-                   // startActivity(new Intent(MainActivity.this, Menu.class));
+                    startActivity(new Intent(MainActivity.this,Menu.class));
                 }
             }
         }, 3000);

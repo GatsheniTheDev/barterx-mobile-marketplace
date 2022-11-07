@@ -197,7 +197,7 @@ public class Listings extends AppCompatActivity {
             if (requestCode == GALLERY_REQ_CODE) {
                 imageUri = data.getData();
                 if (imageUri != null)
-                    activityListingsBinding.imageSwitcher.setImageURI(imageUri);
+                    imageSwitcher.setImageURI(imageUri);
                 Images[index] = imageUri;
             }
         }
@@ -284,34 +284,5 @@ public class Listings extends AppCompatActivity {
         Images = null;
     }
 
-//    public void classify(){
-//        if(Images[0] !=null){
-//            try {
-//
-//                imageToClassify = MediaStore.Images.Media.getBitmap(getContentResolver(), Images[0]);
-//
-//                Bitmap resize = Bitmap.createScaledBitmap(imageToClassify,224,224,true);
-//                try {
-//                    MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getApplicationContext());
-//
-//                    // Creates inputs for reference.
-//                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
-//                    TensorImage tbuffer  = TensorImage.fromBitmap(resize);
-//                    ByteBuffer byteBuffer = tbuffer.getBuffer();
-//                    inputFeature0.loadBuffer(byteBuffer);
-//                    // Runs model inference and gets result.
-//                    MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
-//                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-//                    Toast.makeText(getApplicationContext(), (int) outputFeature0.getFloatArray()[10]+"",Toast.LENGTH_LONG).show();
-////                        float[] confidence =outputFeature0.getFloatArray();
-//                    // Releases model resources if no longer used.
-//                    model.close();
-//                } catch (IOException e) {
-//                    // TODO Handle the exception
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+
 }
