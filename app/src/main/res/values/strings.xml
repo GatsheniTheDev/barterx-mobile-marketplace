@@ -37,6 +37,10 @@
     <string name="user_email">user.email@yahoo.com</string>
     <string name="user_phone">0989878767</string>
     <string name="view_listing">My Listings</string>
+    <string name="prodDistance">4.56 meters away</string>
+    <string name="productId" > Product</string>
+    <string name="priceId">Price</string>
+    <string name="logout">LOGOUT</string>
 
     <style name="itemTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/black</item>

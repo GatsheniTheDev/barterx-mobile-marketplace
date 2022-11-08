@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.barterx.databinding.ActivityMenuBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class Menu extends AppCompatActivity {
 
     private ActivityMenuBinding binding;
+    private LinearLayout btnViewListings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class Menu extends AppCompatActivity {
                 startActivity(new Intent(Menu.this,Listings.class));
             }
         });
+
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch(item.getItemId()) {
                 case R.id.home:

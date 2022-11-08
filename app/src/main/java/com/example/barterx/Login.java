@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         username =  findViewById(R.id.txtUsername);
         password =  findViewById(R.id.txtPassword);
@@ -61,6 +61,10 @@ public class Login extends AppCompatActivity {
 
     //takes in email and password, return the user corresponding to email if exist else return null
     private void login(String email, String password){
+        if(email.isEmpty() && password.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Invalid login inputs can not be null",Toast.LENGTH_LONG).show();
+            return;
+        }
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email,password)//login with email and password
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -70,14 +74,9 @@ public class Login extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser(); // get an instance of the currently logged user that just registered
                             Toast.makeText(getApplicationContext(), user.getEmail().toString() +" signed in", Toast.LENGTH_SHORT).show();
                             // TODO : edit 2
-                            //startActivity(new Intent(Login.this, Dashboard.class));
+                            startActivity(new Intent(Login.this, Menu.class));
                         }else{
                             Toast.makeText(getApplicationContext(), "Auth failed please check login details", Toast.LENGTH_SHORT).show();
-//                            FirebaseUser user = mAuth.getCurrentUser(); // get an instance of the currently logged user that just registered
-//                            Toast.makeText(getApplicationContext(), user.getEmail().toString() +" signed in", Toast.LENGTH_SHORT).show();
-                            // TODO : edit 3
-                            //startActivity(new Intent(Login.this, ChatActivity.class));
-                            //startActivity(new Intent(Login.this, Menu.class));
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

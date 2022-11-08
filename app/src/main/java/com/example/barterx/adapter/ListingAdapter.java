@@ -1,6 +1,8 @@
 package com.example.barterx.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.barterx.ListingView;
 import com.example.barterx.R;
 import com.example.barterx.algorithms.BitmapConverterFromUrl;
 import com.example.barterx.model.ListingDto;
@@ -47,7 +50,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListingHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListingHolder holder, @SuppressLint("RecyclerView") int position) {
      holder.tvTitle.setText(listingItem.get(position).getTitle());
         holder.tvCategory.setText(listingItem.get(position).getCategory());
         holder.tvCondition.setText(listingItem.get(position).getCondition());
@@ -60,7 +63,9 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Clicked Item ",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, ListingView.class);
+                intent.putExtra("key",listingItem.get(position).getProductId());
+                context.startActivity(intent);
             }
         });
     }

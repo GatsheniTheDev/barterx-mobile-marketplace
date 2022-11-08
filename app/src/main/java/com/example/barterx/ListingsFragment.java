@@ -1,50 +1,39 @@
 package com.example.barterx;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
-import android.provider.MediaStore;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
-import com.example.barterx.databinding.ActivityListingsBinding;
+import com.example.barterx.adapter.ListingAdapter;
+import com.example.barterx.adapter.MenuProductAdapter;
+import com.example.barterx.algorithms.HaversineDistanceAlgorithm;
 import com.example.barterx.model.ListingDto;
 import com.example.barterx.model.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +41,14 @@ import java.util.UUID;
  * create an instance of this fragment.
  */
 public class ListingsFragment extends Fragment {
+    private RecyclerView dataList;
+    private ListingAdapter adapter;
+    private List<ListingDto> products = new ArrayList<>();
+    private FirebaseFirestore database;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private ProgressBar progressBar;
+    private String productId;
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -98,4 +95,40 @@ public class ListingsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_listings, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        dataList = view.findViewById(R.id.myListingRecycler);
+        progressBar = view.findViewById(R.id.miProgressBar);
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseFirestore.getInstance();
+        user = mAuth.getCurrentUser();
+        getListing();
+    }
+
+    private void getListing(){
+        progressBar.setVisibility(View.VISIBLE);
+        database.collection("listing").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@androidx.annotation.NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            products = task.getResult().toObjects(ListingDto.class).stream().filter(o->o.getMerchantId().equals(user.getUid())).collect(Collectors.toList());
+                            adapter = new ListingAdapter(getContext());
+                            dataList.setLayoutManager(new LinearLayoutManager(getContext()));
+                            dataList.setAdapter(adapter);
+                            for (ListingDto prod:products){
+                                adapter.add(prod);
+                            }
+                            if(products.size() ==0){
+                                Toast.makeText(getContext(),"You Have No Listing At the Moment",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+        progressBar.setVisibility(View.INVISIBLE);
+    }
 }

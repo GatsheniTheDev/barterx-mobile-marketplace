@@ -257,6 +257,7 @@ public class Listings extends AppCompatActivity {
                         dto.setLongitude(usr.getLogitude());
                         dto.setMerchantId(user.getUid());
                         dto.setListingImages(listingImages);
+                        dto.setProductId(UUID.randomUUID().toString());
                         database.collection("listing").add(dto)
                                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
@@ -265,7 +266,7 @@ public class Listings extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Listing Completed", Toast.LENGTH_LONG).show();
                                             clear();
                                             activityListingsBinding.simpleProgressBar.setVisibility(View.INVISIBLE);
-                                            startActivity(new Intent(Listings.this, activity_profile.class));
+                                            startActivity(new Intent(Listings.this, Menu.class));
                                         }
                                     }
                                 });

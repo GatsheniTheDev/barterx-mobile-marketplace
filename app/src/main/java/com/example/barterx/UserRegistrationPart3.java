@@ -140,7 +140,7 @@ public class UserRegistrationPart3 extends AppCompatActivity {
                                @Override
                                public void onSuccess(Void unused) {
                                    Toast.makeText(getApplicationContext(),"Image Uploaded plus image url set",Toast.LENGTH_LONG).show();
-                                   startActivity(new Intent(UserRegistrationPart3.this, activity_profile.class));
+                                   startActivity(new Intent(UserRegistrationPart3.this, Menu.class));
                                }
                            });
                }

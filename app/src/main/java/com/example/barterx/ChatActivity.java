@@ -38,6 +38,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private  String senderRoom, receiverRoom;
     private String receiverId;
+    private boolean check = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,14 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter(this);
         binding.chatRecyclerView.setAdapter(chatAdapter);
         binding.chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            check= extras.getBoolean("chatIdCheck");
+        }
         receiverId = getIntent().getStringExtra("id");
+        if(check){
+            receiverId = getIntent().getStringExtra("chatId");
+        }
         senderRoom = user.getUid()+receiverId;
         receiverRoom = receiverId+user.getUid();
         databaseReferenceSender = FirebaseDatabase.getInstance().getReference("chats").child(senderRoom);

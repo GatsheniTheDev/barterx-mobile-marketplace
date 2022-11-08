@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListingDto implements Comparable<ListingDto> {
+    private String productId;
     private String merchantId;
     private String title;
     private String category;
@@ -86,6 +87,14 @@ public class ListingDto implements Comparable<ListingDto> {
 
     public String getCondition() {
         return condition;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getDescription() {

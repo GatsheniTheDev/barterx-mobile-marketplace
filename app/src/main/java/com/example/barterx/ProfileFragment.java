@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -51,6 +52,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayout btnEdit, btnAdd,btnView;
     private ProgressBar progressBar;
+    private ImageButton btnLogOut;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -123,27 +125,29 @@ public class ProfileFragment extends Fragment {
         getProfileById(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         getMyListing(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+        btnLogOut = view.findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               FirebaseAuth.getInstance().signOut();
+               startActivity(new Intent(getContext(),Login.class));
+            }
+        });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Edit Button Clicked",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Feature to be implemented",Toast.LENGTH_LONG).show();
             }
         });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Add button Clicked",Toast.LENGTH_LONG).show();
+               startActivity(new Intent(getContext(),Listings.class));
             }
         });
 
-        btnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"View Listing Button Clicked",Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void getProfileById(String collectionName){
